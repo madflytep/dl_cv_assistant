@@ -1,0 +1,13 @@
+FROM ultralytics/ultralytics:latest-python
+
+RUN pip install poetry
+
+COPY ./backend/pyproject.toml /app/pyproject.toml
+COPY ./backend/poetry.lock /app/poetry.lock
+
+WORKDIR /app
+RUN poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
+
+COPY ./backend /app
+
+CMD ["python", "main.py"]

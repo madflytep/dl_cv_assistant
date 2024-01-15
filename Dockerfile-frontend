@@ -1,0 +1,14 @@
+FROM node:alpine
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+COPY ./frontend/package.json ./
+COPY ./frontend/package-lock.json ./
+
+RUN npm install --silent
+
+COPY ./frontend /app
+
+CMD ["npm", "start"]

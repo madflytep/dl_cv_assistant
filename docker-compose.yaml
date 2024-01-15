@@ -1,0 +1,37 @@
+version: "3.9"
+
+networks:
+  dl-course-network:
+    driver: bridge
+
+services:
+  backend:
+    container_name: backend-fastapi
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    networks:
+      - dl-course-network
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
+
+  frontend:
+    container_name: frontend-react
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    networks:
+      - dl-course-network
+    depends_on:
+      - backend
