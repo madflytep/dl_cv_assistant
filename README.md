@@ -1,4 +1,4 @@
-## DL Course - CV
+## Assistant to drivers
 
 ### How to start
 
